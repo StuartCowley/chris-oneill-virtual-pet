@@ -18,6 +18,14 @@ describe("constructor", () => {
 });
 
 describe("growUp", () => {
+  it("throws an error if the pet is not alive", () => {
+    const pet = new Pet("Fido");
+
+    pet.age = 30;
+
+    expect(() => pet.growUp()).toThrow("Your pet is no longer alive :(");
+  });
+
   it("increments the age by 1", () => {
     const pet = new Pet("Fido");
     pet.growUp();
@@ -41,6 +49,13 @@ describe("growUp", () => {
 });
 
 describe("walk", () => {
+  it("throws an error if the pet is not alive", () => {
+    const pet = new Pet("Fido");
+
+    pet.age = 30;
+
+    expect(() => pet.walk()).toThrow("Your pet is no longer alive :(");
+  });
   it("increases fitness by 4", () => {
     const pet = new Pet("fido");
     pet.fitness = 4;
@@ -68,17 +83,17 @@ describe("feed", () => {
   });
 
   it("throws an error if the pet is not alive", () => {
-    const pet = new Pet("fido");
+    const pet = new Pet("Fido");
+
     pet.age = 30;
 
-    expect(() => pet.feed()).toThrow("Your pet has died :(");
+    expect(() => pet.feed()).toThrow("Your pet is no longer alive :(");
   });
 });
 
 describe("checkup", () => {
   it("checks pets fitness levels", () => {
     const pet = new Pet("Fido");
-    pet.checkup();
 
     pet.fitness = 3;
     expect(pet.checkup()).toEqual("I need a walk");
@@ -86,7 +101,6 @@ describe("checkup", () => {
 
   it("checks pets hunger", () => {
     const pet = new Pet("Fido");
-    pet.checkup();
 
     pet.hunger = 6;
     expect(pet.checkup()).toEqual("I am hungry");
@@ -94,7 +108,6 @@ describe("checkup", () => {
 
   it("checks both fitness and hunger", () => {
     const pet = new Pet("Fido");
-    pet.checkup();
 
     pet.fitness = 3;
     pet.hunger = 6;
@@ -103,10 +116,40 @@ describe("checkup", () => {
 
   it("checkup, pet is doing fine", () => {
     const pet = new Pet("Fido");
-    pet.checkup();
 
     pet.fitness = 6;
     pet.hunger = 3;
     expect(pet.checkup()).toEqual("I feel great!");
+  });
+});
+
+describe("adoptChild", () => {
+  it("adoptChild", () => {
+    const parent = new Pet("Dave");
+
+    expect(parent.children).toEqual([]);
+  });
+
+  it("adoptChild", () => {
+    const parent = new Pet("Dave");
+    const child = new Pet("Amelia");
+    parent.adoptChild(child);
+
+    expect(parent.children).toEqual([child]);
+  });
+});
+
+describe("haveBaby", () => {
+  it("haveBaby", () => {
+    const parent = new Pet("Thom");
+
+    expect(parent.children).toEqual([]);
+  });
+
+  it("haveBaby", () => {
+    const parent = new Pet("Thom");
+    parent.haveBaby("Annie");
+
+    expect(parent.children[0].name).toEqual("Annie");
   });
 });
